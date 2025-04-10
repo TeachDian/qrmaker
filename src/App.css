@@ -1,38 +1,198 @@
+/* src/App.css */
+:root {
+  --primary-color: #1a4d8a;
+  --secondary-color: #2a6ebf;
+  --background-color: #f0f4f8;
+  --card-background: #ffffff;
+  --text-color: #333;
+  --light-text-color: #666;
+  --border-color: #ccc;
+  --success-color: #28a745;
+  --success-hover-color: #218838;
+  --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --border-radius: 8px;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: var(--primary-color);
+  padding: 1rem 2rem;
+  color: white;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.App-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.App-main {
+  flex-grow: 1;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input-section {
+  background-color: var(--card-background);
+  padding: 1.5rem 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-section label {
+  margin-bottom: 0.75rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.input-section input[type="text"] {
+  padding: 0.8rem 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.input-section input[type="text"]:focus {
+  border-color: var(--secondary-color);
+  outline: none;
+}
+
+.output-section {
+  background-color: var(--card-background);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 500px; /* Match input width */
+  box-sizing: border-box;
+  text-align: center;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.output-section h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+  font-size: 1.4rem;
+}
+
+/* Container for the QR code display canvas */
+.qr-code-display {
+  margin-bottom: 1.5rem;
+  /* Ensure canvas inside scales correctly if needed, but usually okay */
+  line-height: 0; /* Prevent extra space below canvas */
+  background-color: white; /* Ensure bg is white even if library changes */
+  padding: 10px; /* Optional padding for visual spacing on screen */
+  border: 1px solid #eee;
+  border-radius: 4px;
+  display: inline-block; /* Fit content */
+}
+
+/* Styles for the text labels *below the display* QR */
+.qr-label-display,
+.qr-timestamp-display {
+  font-size: 0.9rem;
+  color: var(--light-text-color);
+  word-break: break-all;
+  max-width: 90%; /* Prevent long text overflowing container */
+  margin: 0.5rem auto; /* Spacing and centering */
+}
+
+.qr-label-display strong {
+  color: var(--text-color);
+  margin-right: 5px;
+}
+
+.qr-timestamp-display {
+  font-size: 0.8rem;
+  margin-bottom: 1.5rem; /* Space before button */
+}
+
+.save-button {
+  padding: 0.8rem 1.8rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: var(--success-color);
   color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.save-button:hover {
+  background-color: var(--success-hover-color);
 }
 
-@keyframes App-logo-spin {
+.save-button:active {
+  transform: scale(0.98);
+}
+
+.prompt {
+  margin-top: 2rem;
+  color: var(--light-text-color);
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+.App-footer {
+  margin-top: 2rem;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--light-text-color);
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateY(10px);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
   }
+}
+
+/* Ensure canvas elements are displayed correctly */
+canvas {
+  display: block; /* Make sure canvas is block for margin auto etc. */
+  /* No max-width needed here, size is controlled by props/drawing */
 }
